@@ -1,4 +1,4 @@
-enum UserRole { admin, trainor, president }
+enum UserRole { admin, trainor, president, member }
 
 class User {
   final String id;
@@ -34,4 +34,22 @@ class User {
       rpagId: rpagId ?? this.rpagId,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'username': username,
+        'password': password,
+        'name': name,
+        'role': role.name,
+        'rpagId': rpagId,
+      };
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json['id'] as String,
+        username: json['username'] as String,
+        password: json['password'] as String,
+        name: json['name'] as String,
+        role: UserRole.values.firstWhere((r) => r.name == json['role']),
+        rpagId: json['rpagId'] as String?,
+      );
 }
